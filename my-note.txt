@@ -11,3 +11,13 @@ Tutorial of selemium locator
 https://www.protechtraining.com/content/selenium_tutorial-locators
 
 ----------------------------------------------------------------
+
+Install chrome extension "Ranorex Selocity" to get locator easily.
+
+To verify if it's only selecting single object -> use chrome-dev-tool console
+
+> $x("/html//input[@id='username']")
+
+we should only one result!!
+
+----------------------------------------------------------------
