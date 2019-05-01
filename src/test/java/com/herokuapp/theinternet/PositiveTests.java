@@ -28,16 +28,20 @@ public class PositiveTests {
 		String url = "https://the-internet.herokuapp.com/login";
 		driver.get(url);
 		log("Open test page");
-		sleep(2000);
+		sleep(1000);
 
 		// Enter username
 		WebElement username = driver.findElement(By.id("username"));
+		username.sendKeys("tomsmith");
 
 		// Enter password
 		WebElement password = driver.findElement(By.name("password"));
+		password.sendKeys("SuperSecretPassword!");
 
 		// Click login button
 		WebElement loginButton = driver.findElement(By.tagName("button"));
+		loginButton.click();
+		sleep(1000);
 
 		//---------------------------------------------------------------------------------------------
 		// Verification
