@@ -47,7 +47,9 @@ public class PositiveTests {
 	}
 	
 	private void log(String msg) {
-		System.out.println("LOG:" + msg);
+		System.out.println("[LOG] ------------------------------------------------------------------------");
+		System.out.println("[LOG] " + msg);
+		System.out.println("[LOG] ------------------------------------------------------------------------");
 	}
 
 }
