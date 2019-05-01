@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+
+To run specific test from console:
+
+$ mvn -Dtest=PositiveTests clean test
+
+----------------------------------------------------------------
+
+Tutorial of selemium locator
+
+https://www.protechtraining.com/content/selenium_tutorial-locators
+
+----------------------------------------------------------------
