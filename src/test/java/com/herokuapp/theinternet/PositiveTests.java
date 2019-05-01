@@ -9,7 +9,7 @@ public class PositiveTests {
 	@Test
 	public void loginTest() {
 
-		System.out.println("Starting login test");
+		log("Starting login test");
 
 		// Create web driver
 		System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
@@ -21,7 +21,8 @@ public class PositiveTests {
 		// Open test page
 		String url = "https://the-internet.herokuapp.com/login";
 		driver.get(url);
-		System.out.println("Open test page");
+		log("Open test page");
+		sleep(2000);
 
 		// Enter password
 
@@ -35,6 +36,18 @@ public class PositiveTests {
 		// Close browser
 		driver.quit();
 
+	}
+	
+	private void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void log(String msg) {
+		System.out.println("LOG:" + msg);
 	}
 
 }
