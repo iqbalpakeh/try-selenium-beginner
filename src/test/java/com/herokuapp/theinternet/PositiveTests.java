@@ -5,22 +5,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class PositiveTests {
 
+    WebDriver driver;
+
+    @BeforeTest
+    public void prepare() {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+        driver = new ChromeDriver();
+    }
+
     @Test
     public void loginTest() {
-
-        log("Starting login test");
-
-        // Create web driver
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        WebDriver driver = new ChromeDriver();
 
         // ---------------------------------------------------------------------------------------------
         // Execution
         // ---------------------------------------------------------------------------------------------
+
+        log("Starting login test");
 
         // Maximize browser window
         driver.manage().window().maximize();
@@ -65,9 +71,11 @@ public class PositiveTests {
                 "Expected message is not the same as expected\nActual Message: " + actualMsg + "\nExpected Message: "
                         + expectedMsg);
 
-        // Close browser
-        driver.quit();
+    }
 
+    @AfterTest
+    public void close() {
+        driver.quit();
     }
 
     private void sleep(long millis) {
