@@ -1,5 +1,6 @@
 package com.herokuapp.theinternet;
 
+import com.herokuapp.theinternet.util.Util;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,12 +12,12 @@ import org.testng.annotations.Test;
 
 public class PositiveTests {
 
-    WebDriver driver;
+    WebDriver mDriver;
 
     @BeforeTest
     public void prepare() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        driver = new ChromeDriver();
+        mDriver = new ChromeDriver();
     }
 
     @Test
@@ -26,29 +27,29 @@ public class PositiveTests {
         // Execution
         // ---------------------------------------------------------------------------------------------
 
-        log("Starting login test");
+        Util.log("Starting login test");
 
         // Maximize browser window
-        driver.manage().window().maximize();
+        mDriver.manage().window().maximize();
 
         // Open test page
         String url = "https://the-internet.herokuapp.com/login";
-        driver.get(url);
-        log("Open test page");
-        sleep(1000);
+        mDriver.get(url);
+        Util.log("Open test page");
+        Util.sleep(1000);
 
         // Enter username
-        WebElement username = driver.findElement(By.id("username"));
+        WebElement username = mDriver.findElement(By.id("username"));
         username.sendKeys("tomsmith");
 
         // Enter password
-        WebElement password = driver.findElement(By.name("password"));
+        WebElement password = mDriver.findElement(By.name("password"));
         password.sendKeys("SuperSecretPassword!");
 
         // Click login button
-        WebElement loginButton = driver.findElement(By.tagName("button"));
+        WebElement loginButton = mDriver.findElement(By.tagName("button"));
         loginButton.click();
-        sleep(1000);
+        Util.sleep(1000);
 
         // ---------------------------------------------------------------------------------------------
         // Verification
@@ -56,15 +57,15 @@ public class PositiveTests {
 
         // Check expected url
         String expectedUrl = "https://the-internet.herokuapp.com/secure";
-        String actualUrl = driver.getCurrentUrl();
+        String actualUrl = mDriver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl, "Actual page url is not the same expected");
 
         // logout button is displayed
-        WebElement logoutButton = driver.findElement(By.xpath("//a[@class='button secondary radius']"));
+        WebElement logoutButton = mDriver.findElement(By.xpath("//a[@class='button secondary radius']"));
         Assert.assertTrue(logoutButton.isDisplayed(), "Logout button is not displayed");
 
         // successful login message
-        WebElement successMessage = driver.findElement(By.xpath("//div[@id='flash']"));
+        WebElement successMessage = mDriver.findElement(By.xpath("//div[@id='flash']"));
         String expectedMsg = "You logged into a secure area!";
         String actualMsg = successMessage.getText();
         Assert.assertTrue(actualMsg.contains(expectedMsg),
@@ -75,21 +76,7 @@ public class PositiveTests {
 
     @AfterTest
     public void close() {
-        driver.quit();
-    }
-
-    private void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void log(String msg) {
-        System.out.println("[LOG] ------------------------------------------------------------------------");
-        System.out.println("[LOG] " + msg);
-        System.out.println("[LOG] ------------------------------------------------------------------------");
+        mDriver.quit();
     }
 
 }
