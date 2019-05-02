@@ -4,72 +4,84 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class PositiveTests {
 
-	@Test
-	public void loginTest() {
+    @Test
+    public void loginTest() {
 
-		log("Starting login test");
+        log("Starting login test");
 
-		// Create web driver
-		System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-		WebDriver driver = new ChromeDriver();
+        // Create web driver
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+        WebDriver driver = new ChromeDriver();
 
-		//---------------------------------------------------------------------------------------------
-		// Execution
-		//---------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
 
-		// Maximize browser window
-		driver.manage().window().maximize();
+        // Maximize browser window
+        driver.manage().window().maximize();
 
-		// Open test page
-		String url = "https://the-internet.herokuapp.com/login";
-		driver.get(url);
-		log("Open test page");
-		sleep(1000);
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/login";
+        driver.get(url);
+        log("Open test page");
+        sleep(1000);
 
-		// Enter username
-		WebElement username = driver.findElement(By.id("username"));
-		username.sendKeys("tomsmith");
+        // Enter username
+        WebElement username = driver.findElement(By.id("username"));
+        username.sendKeys("tomsmith");
 
-		// Enter password
-		WebElement password = driver.findElement(By.name("password"));
-		password.sendKeys("SuperSecretPassword!");
+        // Enter password
+        WebElement password = driver.findElement(By.name("password"));
+        password.sendKeys("SuperSecretPassword!");
 
-		// Click login button
-		WebElement loginButton = driver.findElement(By.tagName("button"));
-		loginButton.click();
-		sleep(1000);
+        // Click login button
+        WebElement loginButton = driver.findElement(By.tagName("button"));
+        loginButton.click();
+        sleep(1000);
 
-		//---------------------------------------------------------------------------------------------
-		// Verification
-		//---------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
 
-		// - logout button is visible
-		WebElement logoutButton = driver.findElement(By.xpath("//a[@class='button secondary radius']"));
+        // Check expected url
+        String expectedUrl = "https://the-internet.herokuapp.com/secure";
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals(actualUrl, expectedUrl, "Actual page url is not the same expected");
 
-		// - succesful login message
-		WebElement successMessage = driver.findElement(By.cssSelector("#flash"));
+        // logout button is displayed
+        WebElement logoutButton = driver.findElement(By.xpath("//a[@class='button secondary radius']"));
+        Assert.assertTrue(logoutButton.isDisplayed(), "Logout button is not displayed");
 
-		// Close browser
-		driver.quit();
+        // successful login message
+        WebElement successMessage = driver.findElement(By.xpath("//div[@id='flash']"));
+        String expectedMsg = "You logged into a secure area!";
+        String actualMsg = successMessage.getText();
+        Assert.assertTrue(actualMsg.contains(expectedMsg),
+                "Expected message is not the same as expected\nActual Message: " + actualMsg + "\nExpected Message: "
+                        + expectedMsg);
 
-	}
-	
-	private void sleep(long millis) {
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void log(String msg) {
-		System.out.println("[LOG] ------------------------------------------------------------------------");
-		System.out.println("[LOG] " + msg);
-		System.out.println("[LOG] ------------------------------------------------------------------------");
-	}
+        // Close browser
+        driver.quit();
+
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void log(String msg) {
+        System.out.println("[LOG] ------------------------------------------------------------------------");
+        System.out.println("[LOG] " + msg);
+        System.out.println("[LOG] ------------------------------------------------------------------------");
+    }
 
 }
