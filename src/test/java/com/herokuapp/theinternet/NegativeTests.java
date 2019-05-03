@@ -14,13 +14,13 @@ public class NegativeTests {
 
     private WebDriver mDriver;
 
-    @BeforeTest
+    @BeforeTest(groups =  {"smokeTests"})
     public void prepare() {
         System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
         mDriver = new FirefoxDriver();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, groups = {"negativeTests", "smokeTests"})
     public void incorrectUserNameTest() {
 
         // ---------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ public class NegativeTests {
 
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, groups = {"negativeTests"})
     public void incorrectPasswordTest() {
 
         // ---------------------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ public class NegativeTests {
 
     }
 
-    @AfterTest
+    @AfterTest(groups =  {"smokeTests"})
     public void close() {
         mDriver.quit();
     }
