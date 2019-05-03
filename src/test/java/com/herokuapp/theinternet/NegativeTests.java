@@ -4,7 +4,7 @@ import com.herokuapp.theinternet.util.Util;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -12,12 +12,12 @@ import org.testng.annotations.Test;
 
 public class NegativeTests {
 
-    WebDriver mDriver;
+    private WebDriver mDriver;
 
     @BeforeTest
     public void prepare() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        mDriver = new ChromeDriver();
+        System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
+        mDriver = new FirefoxDriver();
     }
 
     @Test
