@@ -20,7 +20,7 @@ public class NegativeTests {
         mDriver = new FirefoxDriver();
     }
 
-    @Test
+    @Test(priority = 1)
     public void incorrectUserNameTest() {
 
         // ---------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ public class NegativeTests {
 
     }
 
-    @Test
+    @Test(priority = 2)
     public void incorrectPasswordTest() {
 
         // ---------------------------------------------------------------------------------------------
