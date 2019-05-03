@@ -12,12 +12,12 @@ import org.testng.annotations.Test;
 
 public class PositiveTests {
 
-    WebDriver mDriver;
+    WebDriver webDriver;
 
     @BeforeTest
     public void prepare() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
-        mDriver = new ChromeDriver();
+        webDriver = new ChromeDriver();
     }
 
     @Test
@@ -30,24 +30,24 @@ public class PositiveTests {
         Util.log("Starting login test");
 
         // Maximize browser window
-        mDriver.manage().window().maximize();
+        webDriver.manage().window().maximize();
 
         // Open test page
         String url = "https://the-internet.herokuapp.com/login";
-        mDriver.get(url);
+        webDriver.get(url);
         Util.log("Open test page");
         Util.sleep(1000);
 
         // Enter username
-        WebElement username = mDriver.findElement(By.id("username"));
+        WebElement username = webDriver.findElement(By.id("username"));
         username.sendKeys("tomsmith");
 
         // Enter password
-        WebElement password = mDriver.findElement(By.name("password"));
+        WebElement password = webDriver.findElement(By.name("password"));
         password.sendKeys("SuperSecretPassword!");
 
         // Click login button
-        WebElement loginButton = mDriver.findElement(By.tagName("button"));
+        WebElement loginButton = webDriver.findElement(By.tagName("button"));
         loginButton.click();
         Util.sleep(1000);
 
@@ -57,15 +57,15 @@ public class PositiveTests {
 
         // Check expected url
         String expectedUrl = "https://the-internet.herokuapp.com/secure";
-        String actualUrl = mDriver.getCurrentUrl();
+        String actualUrl = webDriver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl, "Actual page url is not the same expected");
 
         // logout button is displayed
-        WebElement logoutButton = mDriver.findElement(By.xpath("//a[@class='button secondary radius']"));
+        WebElement logoutButton = webDriver.findElement(By.xpath("//a[@class='button secondary radius']"));
         Assert.assertTrue(logoutButton.isDisplayed(), "Logout button is not displayed");
 
         // successful login message
-        WebElement successMessage = mDriver.findElement(By.xpath("//div[@id='flash']"));
+        WebElement successMessage = webDriver.findElement(By.xpath("//div[@id='flash']"));
         String expectedMsg = "You logged into a secure area!";
         String actualMsg = successMessage.getText();
         Assert.assertTrue(actualMsg.contains(expectedMsg),
@@ -76,7 +76,7 @@ public class PositiveTests {
 
     @AfterTest
     public void close() {
-        mDriver.quit();
+        webDriver.quit();
     }
 
 }
