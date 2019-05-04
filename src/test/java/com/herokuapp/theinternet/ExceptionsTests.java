@@ -1,0 +1,76 @@
+package com.herokuapp.theinternet;
+
+import com.herokuapp.theinternet.util.Util;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.*;
+
+public class ExceptionsTests {
+
+    private WebDriver mDriver;
+
+    @Parameters({"browser"})
+    @BeforeMethod(alwaysRun = true)
+    private void setUp(@Optional String browser) {
+
+        // Create driver
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                mDriver = new ChromeDriver();
+                break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
+                mDriver = new FirefoxDriver();
+                break;
+            default:
+                Util.log("Do not know how to start " + browser + ", starting chrome instead!");
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                mDriver = new ChromeDriver();
+                break;
+        }
+
+        // Maximize browser window
+        mDriver.manage().window().maximize();
+    }
+
+    @Test
+    public void notVisibleTest() {
+
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
+
+        Util.log("Starting notVisibleTest");
+
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/dynamic_loading/1";
+        mDriver.get(url);
+        Util.log("Open test page");
+
+        // Press Start button
+        WebElement startButton = mDriver.findElement(By.xpath("//div[@id='start]/button"));
+        startButton.click();
+
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
+
+        // Check expected message
+        WebElement finishElement = mDriver.findElement(By.id("finish"));
+        String finishText = finishElement.getText();
+        Assert.assertTrue(finishText.contains("Hello World!"));
+    }
+
+    @AfterMethod(alwaysRun = true)
+    private void tearDown() {
+        mDriver.quit();
+    }
+
+}
