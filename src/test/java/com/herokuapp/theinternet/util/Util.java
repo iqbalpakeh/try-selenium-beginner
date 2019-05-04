@@ -3,11 +3,11 @@ package com.herokuapp.theinternet.util;
 public class Util {
 
     public static void sleep(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     Thread.sleep(millis);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public static void log(String msg) {

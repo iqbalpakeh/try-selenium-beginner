@@ -23,3 +23,9 @@ we should only one result!!
 XPATH simple rule -> //tag[@attribute='value']
 
 ----------------------------------------------------------------
+
+To control the input of the maven, please follow this
+
+https://stackoverflow.com/questions/10391312/testng-surefire-run-suite-with-maven-command-line
+
+----------------------------------------------------------------
