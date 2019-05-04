@@ -55,7 +55,7 @@ public class ExceptionsTests {
         Util.log("Open test page");
 
         // Press Start button
-        WebElement startButton = mDriver.findElement(By.xpath("//div[@id='start]/button"));
+        WebElement startButton = mDriver.findElement(By.xpath("//div[@id='start']/button"));
         startButton.click();
 
         // ---------------------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ public class ExceptionsTests {
         // Check expected message
         WebElement finishElement = mDriver.findElement(By.id("finish"));
         String finishText = finishElement.getText();
-        Assert.assertTrue(finishText.contains("Hello World!"));
+        Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
     }
 
     @AfterMethod(alwaysRun = true)
