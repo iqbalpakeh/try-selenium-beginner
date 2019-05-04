@@ -62,8 +62,10 @@ public class ExceptionsTests {
         // Verification
         // ---------------------------------------------------------------------------------------------
 
-        // Check expected message
+        // Check expected message (with explicit wait)
         WebElement finishElement = mDriver.findElement(By.id("finish"));
+        WebDriverWait wait = new WebDriverWait(mDriver, 10);
+        wait.until(ExpectedConditions.visibilityOf(finishElement));
         String finishText = finishElement.getText();
         Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
     }
