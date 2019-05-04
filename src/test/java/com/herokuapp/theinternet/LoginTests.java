@@ -4,21 +4,38 @@ import com.herokuapp.theinternet.util.Util;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class LoginTests {
 
     private WebDriver mDriver;
 
-    @BeforeTest(groups = {"positiveTests", "negativeTests"})
-    public void prepare() {
-        System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
-        mDriver = new FirefoxDriver();
+    @Parameters({"browser"})
+    @BeforeMethod(alwaysRun = true)
+    private void setUp(@Optional String browser) {
+
+        // Create driver
+        switch (browser) {
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                mDriver = new ChromeDriver();
+                break;
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver");
+                mDriver = new FirefoxDriver();
+                break;
+            default:
+                Util.log("Do not know how to start " + browser + ", starting chrome instead!");
+                System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+                mDriver = new ChromeDriver();
+                break;
+        }
+
+        // Maximize browser window
+        mDriver.manage().window().maximize();
     }
 
     @Test(priority = 1, groups = {"positiveTests"})
@@ -29,9 +46,6 @@ public class LoginTests {
         // ---------------------------------------------------------------------------------------------
 
         Util.log("Starting positiveLoginTest");
-
-        // Maximize browser window
-        mDriver.manage().window().maximize();
 
         // Open test page
         String url = "https://the-internet.herokuapp.com/login";
@@ -126,8 +140,8 @@ public class LoginTests {
 
     }
 
-    @AfterTest(groups = {"positiveTests", "negativeTests"})
-    public void close() {
+    @AfterMethod(alwaysRun = true)
+    private void tearDown() {
         mDriver.quit();
     }
 

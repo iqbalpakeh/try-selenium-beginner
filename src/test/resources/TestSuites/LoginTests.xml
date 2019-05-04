@@ -2,6 +2,7 @@
 <suite name="AllTests" verbose="1" >
 
     <test name="PositiveTests" >
+        <parameter name="browser" value="chrome"/>
         <groups>
             <run>
                 <include name="positiveTests"/>
@@ -13,6 +14,7 @@
     </test>
 
     <test name="NegativeUsernameTests">
+        <parameter name="browser" value="chrome"/>
         <parameter name="username" value="incorrect-username"/>
         <parameter name="password" value="SuperSecretPassword!"/>
         <parameter name="expectedMessage" value="Your username is invalid!"/>
@@ -26,6 +28,7 @@
     </test>
 
     <test name="NegativePasswordTests">
+        <parameter name="browser" value="firefox"/>
         <parameter name="username" value="tomsmith"/>
         <parameter name="password" value="incorrect-password!"/>
         <parameter name="expectedMessage" value="Your password is invalid!"/>
