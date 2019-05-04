@@ -41,7 +41,7 @@ public class ExceptionsTests {
         mDriver.manage().window().maximize();
     }
 
-    @Test
+    @Test(priority = 1)
     public void notVisibleTest() {
 
         // ---------------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ public class ExceptionsTests {
         Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
     }
 
-    @Test
+    @Test(priority = 2)
     public void timeoutTest() {
 
         // ---------------------------------------------------------------------------------------------
@@ -104,6 +104,36 @@ public class ExceptionsTests {
         }
         String finishText = finishElement.getText();
         Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
+    }
+
+    @Test(priority = 3)
+    public void noSuchElementTest() {
+
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
+
+        Util.log("Starting noSuchElementTest");
+
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/dynamic_loading/2";
+        mDriver.get(url);
+        Util.log("Open test page");
+
+        // Press Start button
+        WebElement startButton = mDriver.findElement(By.xpath("//div[@id='start']/button"));
+        startButton.click();
+
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
+
+        // Check expected message (with explicit wait)
+        WebDriverWait wait = new WebDriverWait(mDriver, 10);
+        Assert.assertTrue(
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("finish"), "Hello World!")),
+                "Couldn't verify expected text"
+        );
     }
 
     @AfterMethod(alwaysRun = true)
