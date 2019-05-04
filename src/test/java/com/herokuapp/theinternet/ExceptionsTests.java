@@ -2,6 +2,7 @@ package com.herokuapp.theinternet;
 
 import com.herokuapp.theinternet.util.Util;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -66,6 +67,41 @@ public class ExceptionsTests {
         WebElement finishElement = mDriver.findElement(By.id("finish"));
         WebDriverWait wait = new WebDriverWait(mDriver, 10);
         wait.until(ExpectedConditions.visibilityOf(finishElement));
+        String finishText = finishElement.getText();
+        Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
+    }
+
+    @Test
+    public void timeoutTest() {
+
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
+
+        Util.log("Starting notVisibleTest");
+
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/dynamic_loading/1";
+        mDriver.get(url);
+        Util.log("Open test page");
+
+        // Press Start button
+        WebElement startButton = mDriver.findElement(By.xpath("//div[@id='start']/button"));
+        startButton.click();
+
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
+
+        // Check finish text timeout
+        WebElement finishElement = mDriver.findElement(By.id("finish"));
+        try {
+            WebDriverWait wait = new WebDriverWait(mDriver, 2);
+            wait.until(ExpectedConditions.visibilityOf(finishElement));
+        } catch (TimeoutException e) {
+            Util.log("Exception caught: " + e.getMessage());
+            Util.sleep(3000); // add more wait
+        }
         String finishText = finishElement.getText();
         Assert.assertTrue(finishText.contains("Hello World!"), "Finish text: " + finishText);
     }
