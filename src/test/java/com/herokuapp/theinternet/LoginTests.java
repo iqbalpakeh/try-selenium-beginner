@@ -58,7 +58,6 @@ public class LoginTests {
         String url = "https://the-internet.herokuapp.com/login";
         mDriver.get(url);
         Util.log("Open test page");
-        Util.sleep(1000);
 
         // Enter username
         WebElement username = mDriver.findElement(By.id("username"));
@@ -75,7 +74,6 @@ public class LoginTests {
         WebElement loginButton = mDriver.findElement(By.tagName("button"));
         wait.until(ExpectedConditions.elementToBeClickable(loginButton));
         loginButton.click();
-        Util.sleep(1000);
 
         // ---------------------------------------------------------------------------------------------
         // Verification
@@ -117,7 +115,6 @@ public class LoginTests {
         String url = "https://the-internet.herokuapp.com/login";
         mDriver.get(url);
         Util.log("Open test page");
-        Util.sleep(1000);
 
         // Enter username
         WebElement usernameElement = mDriver.findElement(By.id("username"));
@@ -130,7 +127,6 @@ public class LoginTests {
         // Click login button
         WebElement loginButton = mDriver.findElement(By.tagName("button"));
         loginButton.click();
-        Util.sleep(1000);
 
         // ---------------------------------------------------------------------------------------------
         // Verification
