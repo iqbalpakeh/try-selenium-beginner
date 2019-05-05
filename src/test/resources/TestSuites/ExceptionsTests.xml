@@ -6,10 +6,11 @@
         <classes>
             <class name="com.herokuapp.theinternet.ExceptionsTests">
                 <methods>
-<!--                    <include name="notVisibleTest"/>-->
-<!--                    <include name="noSuchElementTest"/>-->
-<!--                    <exclude name="timeoutTest"/>-->
-                    <include name="staleElementTest"/>
+                    <!--                    <include name="notVisibleTest"/>-->
+                    <!--                    <include name="noSuchElementTest"/>-->
+                    <!--                    <exclude name="timeoutTest"/>-->
+                    <!--                    <include name="staleElementTest"/>-->
+                    <include name="disabledElementTest"/>
                 </methods>
             </class>
         </classes>

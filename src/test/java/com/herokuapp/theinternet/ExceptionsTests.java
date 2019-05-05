@@ -173,6 +173,37 @@ public class ExceptionsTests {
         Assert.assertTrue(checkbox.isDisplayed(), "Checkbox is not visible, but it should be");
     }
 
+    @Test(priority = 5)
+    public void disabledElementTest() {
+
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
+
+        Util.log("Starting disabledElementTest");
+
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/dynamic_controls";
+        mDriver.get(url);
+        Util.log("Open test page");
+
+        // Find elements
+        WebElement enableButton = mDriver.findElement(By.xpath("//button[contains(text(), 'Enable')]"));
+        WebElement textField = mDriver.findElement(By.xpath("(//input)[2]"));
+
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
+
+        enableButton.click();
+
+        WebDriverWait wait = new WebDriverWait(mDriver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(textField));
+
+        textField.sendKeys("My name is Iqbal!");
+        Assert.assertEquals(textField.getAttribute("value"), "My name is Iqbal!");
+    }
+
     @AfterMethod(alwaysRun = true)
     private void tearDown() {
         mDriver.quit();
