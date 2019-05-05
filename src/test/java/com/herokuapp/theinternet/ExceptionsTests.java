@@ -154,10 +154,23 @@ public class ExceptionsTests {
         WebElement checkbox = mDriver.findElement(By.id("checkbox"));
         WebElement removeButton = mDriver.findElement(By.xpath("//button[contains(text(), 'Remove')]"));
 
-        // Make sure checkbox is gone after removeButton is clicked
+        // ---------------------------------------------------------------------------------------------
+        // Verification
+        // ---------------------------------------------------------------------------------------------
+
+        // Make sure checkbox is gone after removeButton clicked
         removeButton.click();
         WebDriverWait wait = new WebDriverWait(mDriver, 10);
-        Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOf(checkbox)));
+        Assert.assertTrue(
+                wait.until(ExpectedConditions.stalenessOf(checkbox)),
+                "Checkbox is still visible, but it shouldn't be"
+        );
+
+        // Make sure checkbox is shown again  after add clicked
+        WebElement addButton = mDriver.findElement(By.xpath("//button[contains(text(), 'Add')]"));
+        addButton.click();
+        checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkbox")));
+        Assert.assertTrue(checkbox.isDisplayed(), "Checkbox is not visible, but it should be");
     }
 
     @AfterMethod(alwaysRun = true)
