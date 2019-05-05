@@ -136,6 +136,30 @@ public class ExceptionsTests {
         );
     }
 
+    @Test(priority = 4)
+    public void staleElementTest() {
+
+        // ---------------------------------------------------------------------------------------------
+        // Execution
+        // ---------------------------------------------------------------------------------------------
+
+        Util.log("Starting staleElementTest");
+
+        // Open test page
+        String url = "https://the-internet.herokuapp.com/dynamic_controls";
+        mDriver.get(url);
+        Util.log("Open test page");
+
+        // Find elements
+        WebElement checkbox = mDriver.findElement(By.id("checkbox"));
+        WebElement removeButton = mDriver.findElement(By.xpath("//button[contains(text(), 'Remove')]"));
+
+        // Make sure checkbox is gone after removeButton is clicked
+        removeButton.click();
+        WebDriverWait wait = new WebDriverWait(mDriver, 10);
+        Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOf(checkbox)));
+    }
+
     @AfterMethod(alwaysRun = true)
     private void tearDown() {
         mDriver.quit();
